@@ -30,6 +30,8 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
+          tabBarStyle: {display: 'none'},
+          headerShown: false,
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
@@ -37,7 +39,17 @@ export default function TabLayout() {
         name="explore"
         options={{
           title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          headerShown: false,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="onboarding"
+        options={{
+          title: 'Onboarding',
+          tabBarStyle: {display: 'none'},
+          headerShown: false,
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person" color={color} />,
         }}
       />
     </Tabs>
