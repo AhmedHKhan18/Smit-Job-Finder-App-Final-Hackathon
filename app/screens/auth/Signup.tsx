@@ -123,11 +123,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 8,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 14,
     color: '#666',
     marginBottom: 32,
+    textAlign: 'center',
   },
   form: {
     gap: 16,

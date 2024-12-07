@@ -1,4 +1,4 @@
-import { Dimensions, View } from "react-native";
+import { Dimensions, View, TouchableOpacity, Text } from "react-native";
 import Onboarding from 'react-native-onboarding-swiper';
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -12,12 +12,23 @@ const navigation = useNavigation()
     navigation.navigate('Login')
   }
 
+  const DoneButton = ({...props})=>{
+    return(
+      <TouchableOpacity style={styles.doneButton} {...props}>
+        <Text>Done</Text>
+      </TouchableOpacity>
+    )
+  }
+
     return(
         <View style={styles.container}>
             <Onboarding
-            containerStyles={{paddingHorizontal: 15}}
+            containerStyles={{paddingHorizontal: 15, paddingVertical: 100, color: '#fff'}}
             onDone={handleDone}
             onSkip={handleDone}
+            DoneButtonComponent={DoneButton}
+            bottomBarHighlight={false}
+            titleStyles={styles.title}
   pages={[
     {
       backgroundColor: '#a7f3d0',
@@ -31,15 +42,15 @@ const navigation = useNavigation()
     {
       backgroundColor: '#fef3c7',
       image: <View style={styles.secondContainer}>
-      <LottieView source={require('../../assets/LottieFiles/jobsearch.json')} style={styles.lottie} autoPlay loop />
+      <LottieView source={require('../../assets/LottieFiles/graph.json')} style={styles.lottie} autoPlay loop />
       </View>,
       title: 'Grow Your Career with Us',
       subtitle: 'Track your applications, connect with top companies, and boost your professional journey.',
     },
     {
-      backgroundColor: '#ADD8E6',
+      backgroundColor: '#a78bfa',
       image: <View style={styles.secondContainer}>
-      <LottieView source={require('../../assets/LottieFiles/jobsearch.json')} style={styles.lottie} autoPlay loop />
+      <LottieView source={require('../../assets/LottieFiles/connections.json')} style={styles.lottie} autoPlay loop />
       </View>,
       title: 'Connect with Top Employers',
       subtitle: 'Build strong professional connections and get hired by industry leaders.',
@@ -55,8 +66,8 @@ const navigation = useNavigation()
       backgroundColor: '#fff',
       // alignItems: 'center',
       // justifyContent: 'center',
-          },
-          lottie: {
+    },
+    lottie: {
             height: width,
             width: width*0.9,
           },
@@ -66,4 +77,10 @@ const navigation = useNavigation()
             alignItems: 'center',
             // backgroundColor: '#fff',
           },
+          doneButton:{
+            padding: 20,     
+          },
+          title:{
+            fontWeight: 'bold',            
+          }
         });
