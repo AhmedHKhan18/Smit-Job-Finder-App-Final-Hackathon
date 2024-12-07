@@ -13,15 +13,36 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../index';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '@/app/utils/firebase.config'
+import { setItem } from '@/app/utils/asyncStorage';
+import { router } from 'expo-router';
 
 
 export default function SignupScreen() {
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
+  function handleSignup(){
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    router.push('/screens/main/home')
+    setItem('User', 'user')
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,6 +63,15 @@ export default function SignupScreen() {
                 value={name}
                 onChangeText={setName}
                 autoCapitalize="words"
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Phone No</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your phone no"
+                value={phone}
+                onChangeText={setPhone}
               />
             </View>
 
@@ -80,7 +110,7 @@ export default function SignupScreen() {
               </View>
             </View>
 
-            <TouchableOpacity style={styles.signupButton}>
+            <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
               <Text style={styles.signupButtonText}>Sign Up</Text>
             </TouchableOpacity>
 

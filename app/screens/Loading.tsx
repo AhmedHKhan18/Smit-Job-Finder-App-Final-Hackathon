@@ -4,6 +4,8 @@ import { StyleSheet, View, Dimensions } from 'react-native';
 import { useEffect } from 'react';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { router } from 'expo-router';
+import { getItem } from '../utils/asyncStorage';
 
 const {width, height} = Dimensions.get('window');
 
@@ -11,10 +13,25 @@ export default function Loading() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('Onboarding');
-    }, 5000);
+    // setTimeout(() => {
+    //   // navigation.navigate('home');
+    //   router.push('/screens/main/home')
+    // }, 5000);
+    checkUser()
   }, []);
+
+  const checkUser = ()=>{
+    getItem('User').then((user) => {
+      console.log("🚀 ~ getItem ~ user:", user);
+      if(user){
+        router.push('/screens/main/home');
+      }else{
+        router.push('/screens/auth/Login');
+      }
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
 
   return (
     <View style={styles.container}>

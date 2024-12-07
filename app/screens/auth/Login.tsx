@@ -13,6 +13,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../index';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '@/app/utils/firebase.config'
+import { router } from 'expo-router';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -22,7 +25,21 @@ export default function LoginScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
     
   const handleNavigate = () => {
-    navigation.navigate('Signup')
+    router.push('/screens/auth/Signup')
+  }
+
+  function handleLogin(){
+signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    router.push('/screens/Loading')
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
   }
 
   return (
@@ -75,7 +92,7 @@ export default function LoginScreen() {
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
             <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
 
