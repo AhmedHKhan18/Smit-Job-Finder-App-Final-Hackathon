@@ -3,6 +3,7 @@ import Onboarding from 'react-native-onboarding-swiper';
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LottieView from 'lottie-react-native';
+import { setItem } from "../utils/asyncStorage";
 
 const {width, height} = Dimensions.get('window');
 export default function OnBoarding(){
@@ -10,6 +11,7 @@ const navigation = useNavigation()
 
   const handleDone = ()=>{
     navigation.navigate('Login')
+    setItem('onboarded', '1')
   }
 
   const DoneButton = ({...props})=>{
