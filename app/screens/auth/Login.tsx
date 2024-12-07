@@ -6,6 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
+  Image,
+  ScrollView
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -25,7 +27,9 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
       <View style={styles.content}>
+        <Image source={require('@/assets/images/job.jpeg')} style={styles.Image}/>
         <Text style={styles.title}>Login</Text>
         <Text style={styles.subtitle}>
           Welcome back! Please log in to access your account.
@@ -96,6 +100,7 @@ export default function LoginScreen() {
           </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -107,6 +112,9 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 24,
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
   title: {
     fontSize: 24,
@@ -204,4 +212,11 @@ const styles = StyleSheet.create({
     color: '#666',
     fontSize: 14,
   },
+  Image: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    marginBottom: 16,
+    alignSelf: 'center',
+  }
 });

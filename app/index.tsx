@@ -28,8 +28,8 @@ useEffect(() => {
   }, []);
 
   const checkIfAlreadyOnboarded = async () => {
-    const alreadyOnboarded:any = await getItem('alreadyOnboarded');
-    if (alreadyOnboarded == 1) {
+    const onboarded:any = await getItem('onboarded');
+    if (onboarded == 1) {
       setShowOnboarding(false)
       // Navigate to the home screen if the user has already onboarded
     }else{
@@ -54,7 +54,7 @@ if(showOnboarding){
   );
 }else{
   return (
-    <Stack.Navigator initialRouteName='Loading'>
+    <Stack.Navigator initialRouteName='Login'>
       <Stack.Screen name="Loading" component={Loading} options={opt}/>
       <Stack.Screen name="Login" component={Login} options={opt}/>
       <Stack.Screen name="Signup" component={Signup} options={opt}/>

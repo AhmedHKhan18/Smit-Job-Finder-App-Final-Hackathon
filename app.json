@@ -4,7 +4,7 @@
     "slug": "smit-job-finder-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/job.jpeg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -27,7 +27,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/react-logo.png",
+          "image": "./assets/images/job.jpeg",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -35,7 +35,7 @@
       ]
     ],
     "splash": {
-      "image": "./assets/images/react-logo.png", 
+      "image": "./assets/images/job.jpeg", 
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

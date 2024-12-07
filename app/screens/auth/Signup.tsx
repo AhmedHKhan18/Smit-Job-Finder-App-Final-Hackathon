@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  Image
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -26,6 +27,7 @@ export default function SignupScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.content}>
+        <Image source={require('@/assets/images/job.jpeg')} style={styles.Image}/>
           <Text style={styles.title}>Sign Up</Text>
           <Text style={styles.subtitle}>
             Create an account to get started.
@@ -210,4 +212,11 @@ const styles = StyleSheet.create({
     color: '#666',
     fontSize: 14,
   },
+  Image: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    marginBottom: 16,
+    alignSelf: 'center',
+  }
 });
