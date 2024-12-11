@@ -13,11 +13,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../index';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from '@/app/utils/firebase.config'
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from '@/app/utils/firebase.config'
 import { setItem } from '@/app/utils/asyncStorage';
 import { router } from 'expo-router';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { doc, setDoc } from 'firebase/firestore';
 
 export default function SignupScreen() {
   const [name, setName] = useState('');
@@ -28,14 +29,19 @@ export default function SignupScreen() {
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
-  function handleSignup(){
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
+ function handleSignup(){
+  createUserWithEmailAndPassword(auth, email, password)
+  .then(async(userCredential) => {
     // Signed up 
-    const user = userCredential.user;
+    const user = userCredential.user.uid;
+    setItem('User', user)
+      await setDoc(doc(db, "users", user), {
+        name: name,
+        email: email,
+        password: password,
+        Uid: user
+    })    
     router.push('/screens/main/home')
-    setItem('User', 'user')
-    // ...
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -43,9 +49,11 @@ createUserWithEmailAndPassword(auth, email, password)
     // ..
   });
   }
+  
 
   return (
     <SafeAreaView style={styles.container}>
+      <KeyboardAwareScrollView>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.content}>
         <Image source={require('@/assets/images/job.jpeg')} style={styles.Image}/>
@@ -130,12 +138,13 @@ createUserWithEmailAndPassword(auth, email, password)
               <Text style={styles.socialButtonText}>Sign up with Apple</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.loginContainer} onPress={()=>navigation.navigate('Login')}>
+            <TouchableOpacity style={styles.loginContainer} onPress={()=>router.push('/screens/auth/Login')}>
               <Text style={styles.loginText}>Already have an account? Log in</Text>
             </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }

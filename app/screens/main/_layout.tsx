@@ -1,34 +1,37 @@
-// import { GestureHandlerRootView } from 'react-native-gesture-handler';
-// import { Drawer } from 'expo-router/drawer';
+import React from 'react';
+import { Tabs } from 'expo-router';
+import CustomTabBar from '@/components/TabBar';
 
-// export default function Layout() {
-//   return (
-//     <GestureHandlerRootView style={{ flex: 1 }}>
-//       <Drawer screenOptions={{headerShown: false}}>
-//         <Drawer.Screen
-//           name="index" // This is the name of the page and must match the url from root
-//           options={{
-//             drawerLabel: 'Home',
-//             drawerStyle: {display: 'none'},
-//             title: 'overview',
-//             headerShown: false,
-//           }}
-//         />
-//         <Drawer.Screen
-//           name="explore" // This is the name of the page and must match the url from root
-//           options={{
-//             drawerLabel: 'User',
-//             title: 'overview',
-//           }}
-//         />
-//         <Drawer.Screen
-//           name="onboarding" // This is the name of the page and must match the url from root
-//           options={{
-//             drawerLabel: 'User',
-//             title: 'overview',
-//           }}
-//         />
-//       </Drawer>
-//     </GestureHandlerRootView>
-//   );
-// }
+export default function Layout() {
+  return (
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: { display: 'none' }, // Hide system tab bar
+      }}
+      tabBar={(props) => <CustomTabBar {...props} />}
+    >
+      <Tabs.Screen
+        name="Home"
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: () => 'home-outline',
+        }}
+      />
+      <Tabs.Screen
+        name="Profile"
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: () => 'person-outline',
+        }}
+      />
+      <Tabs.Screen
+        name="Applied"
+        options={{
+          tabBarLabel: 'Applied',
+          tabBarIcon: () => 'bag-outline',
+        }}
+      />
+    </Tabs>
+  );
+}

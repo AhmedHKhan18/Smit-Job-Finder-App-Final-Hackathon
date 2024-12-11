@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,30 +10,24 @@ import {
   ScrollView
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../index';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '@/app/utils/firebase.config'
 import { router } from 'expo-router';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { getItem } from '@/app/utils/asyncStorage';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
-    
-  const handleNavigate = () => {
-    router.push('/screens/auth/Signup')
-  }
 
-  function handleLogin(){
-signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
+ function handleLogin(){
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    router.push('/screens/Loading')
+    router.push('/screens/main/home')
     // ...
   })
   .catch((error) => {
@@ -42,8 +36,11 @@ signInWithEmailAndPassword(auth, email, password)
   });
   }
 
+
+
   return (
     <SafeAreaView style={styles.container}>
+      <KeyboardAwareScrollView>
       <ScrollView contentContainerStyle={styles.scrollContent}>
       <View style={styles.content}>
         <Image source={require('@/assets/images/job.jpeg')} style={styles.Image}/>
@@ -112,12 +109,13 @@ signInWithEmailAndPassword(auth, email, password)
             <Text style={styles.socialButtonText}>Apple</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.signupContainer} onPress={handleNavigate}>
-            <Text style={styles.signupText}>Already have an account?</Text>
+          <TouchableOpacity style={styles.signupContainer} onPress={()=>router.push('/screens/auth/Signup')}>
+            <Text style={styles.signupText}>Don't have an account?</Text>
           </TouchableOpacity>
         </View>
       </View>
       </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }

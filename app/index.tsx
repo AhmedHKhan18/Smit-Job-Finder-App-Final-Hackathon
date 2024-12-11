@@ -7,6 +7,7 @@ import Signup from './screens/auth/Signup';
 import { getItem } from './utils/asyncStorage';
 // import Home from '../screens/main/Home';
 
+
 export type RootStackParamList = {
   Login: undefined; // No params for Login screen
   Signup: undefined; // No params for Signup screen
@@ -54,7 +55,7 @@ if(showOnboarding){
   );
 }else{
   return (
-    <Stack.Navigator initialRouteName='Login'>
+    <Stack.Navigator initialRouteName='Loading'>
       <Stack.Screen name="Loading" component={Loading} options={opt}/>
       <Stack.Screen name="Login" component={Login} options={opt}/>
       <Stack.Screen name="Signup" component={Signup} options={opt}/>
@@ -62,6 +63,7 @@ if(showOnboarding){
     </Stack.Navigator>
   );
 }
+
 };
 
 export default MainNavigator;

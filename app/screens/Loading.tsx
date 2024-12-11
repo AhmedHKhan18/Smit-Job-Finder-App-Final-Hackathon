@@ -1,6 +1,6 @@
 import React from 'react';
 import LottieView from 'lottie-react-native';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions, ActivityIndicator } from 'react-native';
 import { useEffect } from 'react';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -20,9 +20,8 @@ export default function Loading() {
     checkUser()
   }, []);
 
-  const checkUser = ()=>{
-    getItem('User').then((user) => {
-      console.log("🚀 ~ getItem ~ user:", user);
+  const checkUser = async ()=>{
+   await getItem('User').then((user) => {
       if(user){
         router.push('/screens/main/home');
       }else{
@@ -35,7 +34,8 @@ export default function Loading() {
 
   return (
     <View style={styles.container}>
-      <LottieView source={require('../../assets/LottieFiles/Loading.json')} style={styles.lottie} autoPlay loop />
+      {/* <LottieView source={require('../../assets/LottieFiles/Loading.json')} style={styles.lottie} autoPlay loop /> */}
+    <ActivityIndicator size={500}/>
     </View>
 
   );

@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export const setItem = async (key: string, value: string) => {
+export const setItem = async (key: string, value: any) => {
   try {
-    await AsyncStorage.setItem(key, value)
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem(key, jsonValue)
   } catch (e) {
     console.log(e)
   }
@@ -10,8 +11,8 @@ export const setItem = async (key: string, value: string) => {
 
 export const getItem = async (key: string) => {
   try {
-    const value = await AsyncStorage.getItem(key)
-    return value
+    const jsonValue = await AsyncStorage.getItem(key);
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     console.log(e)
   }

@@ -1,23 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { getItem, removeItem } from '@/app/utils/asyncStorage';
+import { router } from 'expo-router';
+import { getDocs, collection, updateDoc, doc } from 'firebase/firestore';
+import { db } from '@/app/utils/firebase.config'
 
 export default function App() {
+const [userId, setUserId] = useState<any>()
+const [user, setUser] = useState<any>({})
+
+useEffect(()=>{
+  const getUser = async ()=>{
+  const userData:any = await getItem('User')
+  setUserId(userData)
+  }
+  getUser()
+  getMyData()
+},[])
+
+const getMyData = async ()=>{
+  const list:any[] = []
+  const dbSnap = await getDocs(collection(db, "users"))
+  dbSnap.forEach((item)=>{
+    list.push(item.data())
+  })
+  let myUid = await getItem('User');
+    const filteredUsers = list.filter(users => users.Uid == myUid);
+    setUser(Object.assign({}, filteredUsers[0]))
+}
+
+
+function handleLogout(){
+  removeItem('User')
+  router.push('/screens/auth/Login')
+}
+
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="dark" />
+      <ScrollView>
+      {/* <StatusBar style="dark" /> */}
       
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.userInfo}>
           <Image
-            source={{ uri: 'https://via.placeholder.com/40' }}
+            source={user.img || { uri: 'https://via.placeholder.com/40' }}
             style={styles.avatar}
           />
           <View>
             <Text style={styles.welcomeText}>Welcome back,</Text>
-            <Text style={styles.userName}>Emily Johnson</Text>
+            <Text style={styles.userName}>{user.name}</Text>
           </View>
         </View>
         <TouchableOpacity>
@@ -44,11 +78,12 @@ export default function App() {
         <View style={styles.searchBar}>
           <Ionicons name="search" size={20} color="#666" />
           <TextInput
-            placeholder="Search your role or company"
+            placeholder="Search Job name or company"
+            placeholderTextColor="#666"
             style={styles.searchInput}
           />
         </View>
-        <TouchableOpacity style={styles.searchButton}>
+        <TouchableOpacity style={styles.searchButton} onPress={handleLogout}>
           <Text style={styles.searchButtonText}>Search Job</Text>
         </TouchableOpacity>
       </View>
@@ -73,7 +108,6 @@ export default function App() {
           </TouchableOpacity>
         </View>
         
-        <ScrollView>
           <TouchableOpacity style={styles.jobCard}>
             <Image
               source={{ uri: 'https://via.placeholder.com/40' }}
@@ -99,11 +133,10 @@ export default function App() {
             </View>
             <MaterialIcons name="bookmark-outline" size={24} color="#666" />
           </TouchableOpacity>
-        </ScrollView>
       </View>
 
       {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
+      {/* <View style={styles.bottomNav}>
         <TouchableOpacity style={styles.navItem}>
           <MaterialIcons name="home" size={24} color="#4CAF50" />
           <Text style={[styles.navText, styles.activeNavText]}>Home</Text>
@@ -124,7 +157,8 @@ export default function App() {
           <MaterialIcons name="person-outline" size={24} color="#666" />
           <Text style={styles.navText}>Profile</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
+        </ScrollView>
     </SafeAreaView>
   );
 }
