@@ -4,13 +4,14 @@ import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LottieView from 'lottie-react-native';
 import { setItem } from "../utils/asyncStorage";
+import { useRouter } from "expo-router";
 
 const {width, height} = Dimensions.get('window');
 export default function OnBoarding(){
-const navigation = useNavigation()
+const router = useRouter()
 
   const handleDone = ()=>{
-    navigation.navigate('Login')
+    router.push('/screens/auth/Login')
     setItem('onboarded', '1')
   }
 
@@ -25,7 +26,7 @@ const navigation = useNavigation()
     return(
         <View style={styles.container}>
             <Onboarding
-            containerStyles={{paddingHorizontal: 15, paddingVertical: 100, color: '#fff'}}
+            containerStyles={{paddingHorizontal: 15, paddingVertical: 100}}
             onDone={handleDone}
             onSkip={handleDone}
             DoneButtonComponent={DoneButton}

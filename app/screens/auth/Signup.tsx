@@ -41,7 +41,7 @@ export default function SignupScreen() {
         password: password,
         Uid: user
     })    
-    router.push('/screens/main/home')
+    router.push('/screens/main/Home')
   })
   .catch((error) => {
     const errorCode = error.code;

@@ -23,7 +23,7 @@ export default function Loading() {
   const checkUser = async ()=>{
    await getItem('User').then((user) => {
       if(user){
-        router.push('/screens/main/home');
+        router.push('/screens/main/Home');
       }else{
         router.push('/screens/auth/Login');
       }
@@ -35,7 +35,7 @@ export default function Loading() {
   return (
     <View style={styles.container}>
       {/* <LottieView source={require('../../assets/LottieFiles/Loading.json')} style={styles.lottie} autoPlay loop /> */}
-    <ActivityIndicator size={500}/>
+    <ActivityIndicator size={300}/>
     </View>
 
   );

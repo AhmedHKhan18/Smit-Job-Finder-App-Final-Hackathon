@@ -5,7 +5,7 @@ import Onboarding from './screens/onboarding';
 import Login from './screens/auth/Login';
 import Signup from './screens/auth/Signup';
 import { getItem } from './utils/asyncStorage';
-// import Home from '../screens/main/Home';
+import Home from '../app/screens/main/Home';
 
 
 export type RootStackParamList = {
@@ -50,7 +50,7 @@ if(showOnboarding){
       <Stack.Screen name="Onboarding" component={Onboarding} options={opt}/>
       <Stack.Screen name="Login" component={Login} options={opt}/>
       <Stack.Screen name="Signup" component={Signup} options={opt}/>
-      {/* <Stack.Screen name="Home" component={Home} /> */}
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
 }else{
@@ -59,7 +59,7 @@ if(showOnboarding){
       <Stack.Screen name="Loading" component={Loading} options={opt}/>
       <Stack.Screen name="Login" component={Login} options={opt}/>
       <Stack.Screen name="Signup" component={Signup} options={opt}/>
-      {/* <Stack.Screen name="Home" component={Home} /> */}
+      <Stack.Screen name="Home" component={Home} />
     </Stack.Navigator>
   );
 }

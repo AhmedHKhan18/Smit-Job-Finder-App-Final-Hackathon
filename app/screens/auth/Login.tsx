@@ -27,7 +27,7 @@ export default function LoginScreen() {
     .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    router.push('/screens/main/home')
+    router.push('/screens/main/Home')
     // ...
   })
   .catch((error) => {
