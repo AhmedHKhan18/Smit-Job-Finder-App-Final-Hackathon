@@ -43,13 +43,13 @@ const AnimatedIconStyles = useAnimatedStyle(()=>{
             <Ionicons 
               name={iconName}
               size={24}
-              color={isFocused ? '#0F7DFD' : '#AAA'}
+              color={isFocused ? '#10B981' : '#AAA'}
             />
             </Animated.View>
             <Animated.Text
               style={[
                 styles.tabLabel,
-                { color: isFocused ? '#0F7DFD' : '#AAA' },
+                { color: isFocused ? '#10B981' : '#AAA' },
                 AnimatedTextStyles
               ]}
             >

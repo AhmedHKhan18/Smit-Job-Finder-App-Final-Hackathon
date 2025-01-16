@@ -3,7 +3,7 @@ import Onboarding from 'react-native-onboarding-swiper';
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import LottieView from 'lottie-react-native';
-import { setItem } from "../utils/asyncStorage";
+import { setItem } from "../utils/AsyncStorage";
 import { useRouter } from "expo-router";
 
 const {width, height} = Dimensions.get('window');

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,8 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
-  Image,
-  ActivityIndicator
+  Image
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -20,37 +19,33 @@ import { setItem } from '@/app/utils/AsyncStorage';
 import { router } from 'expo-router';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { doc, setDoc } from 'firebase/firestore';
+import { AppContext } from '../../../context/AppContext';
 
-export default function SignupScreen() {
+export default function CompanyOwner() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const {test, user, signUp, signIn} = useContext<any>(AppContext);
+  console.log("🚀 ~ CompanyOwner ~ test:", test)
+//   console.log("🚀 ~ CompanyOwner ~ appcontext:", appcontext)
+//   console.log("🚀 ~ CompanyOwner ~ authError:", authError)
+  console.log("🚀 ~ CompanyOwner ~ signUp:", signUp)
+  console.log("🚀 ~ CompanyOwner ~ user:", user)
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
 
  function handleSignup(){
-  setLoading(true)
-  createUserWithEmailAndPassword(auth, email, password)
-  .then(async(userCredential) => {
-    // Signed up 
-    const user = userCredential.user.uid;
-    setItem('User', user)
-      await setDoc(doc(db, "users", user), {
-        name: name,
-        email: email,
-        password: password,
-        Uid: user
-    })    
+    // signUp(auth, email, password)
+    // setItem('User', user)
+    //   await setDoc(doc(db, "CompanyOwners", user), {
+    //     name: name,
+    //     email: email,
+    //     password: password,
+    //     Uid: user
+    // })    
     router.push('/screens/main/Home')
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
   }
   
 
@@ -60,7 +55,7 @@ export default function SignupScreen() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.content}>
         <Image source={require('@/assets/images/SMIT-logo.png')} style={styles.Image}/>
-          <Text style={styles.title}>Sign Up</Text>
+          <Text style={styles.title}>Company Owner?</Text>
           <Text style={styles.subtitle}>
             Create an account to get started.
           </Text>
@@ -122,10 +117,7 @@ export default function SignupScreen() {
             </View>
 
             <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
-              {loading ? 
-              <ActivityIndicator size={200} color={'#fff'}/>:
               <Text style={styles.signupButtonText}>Sign Up</Text>
-              }
             </TouchableOpacity>
 
             <View style={styles.orContainer}>

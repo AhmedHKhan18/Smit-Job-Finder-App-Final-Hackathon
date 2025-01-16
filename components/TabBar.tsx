@@ -6,8 +6,12 @@ import TabBarButton from './TabBarButton';
 
 const CustomTabBar = ({ state, descriptors, navigation }: any) => {
   const router = useRouter();
+  const [focusedValue, setFocusedValue] = useState(false)
   const [dimensions, setDimensions] = useState({height: 20, width: 100})
   const buttonWidth = dimensions.width / state.routes.length;
+
+// useEffect(()=>{
+// },[focusedValue])
 
   const onTabbarLayout = (e: LayoutChangeEvent)=>{
     setDimensions({
@@ -28,7 +32,7 @@ const CustomTabBar = ({ state, descriptors, navigation }: any) => {
     <View onLayout={onTabbarLayout} style={styles.tabBar}>
       <Animated.View style={[animatedStyle,{
         position: 'absolute',
-        backgroundColor: '#A8C7FA',
+        backgroundColor: '#ECFDF5',
         borderRadius: 30,
         marginHorizontal: 12,
         height: dimensions.height - 15,

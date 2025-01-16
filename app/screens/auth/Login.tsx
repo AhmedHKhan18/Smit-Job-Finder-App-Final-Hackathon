@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,33 +7,37 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from '@/app/utils/firebase.config'
 import { router } from 'expo-router';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { getItem } from '@/app/utils/asyncStorage';
+import { setItem } from '@/app/utils/AsyncStorage';
+import { AppContext } from '@/context/AppContext';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const { signIn, loading } = useContext(AppContext);
+  console.log("🚀 ~ LoginScreen ~ loading:", loading)
 
 
  function handleLogin(){
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    router.push('/screens/main/Home')
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
+  //  setLoading(true)
+  //   signInWithEmailAndPassword(auth, email, password)
+  //   .then((userCredential) => {
+  //   const user = userCredential.user.uid;
+  //   setItem('User', user)
+  //   router.push('/screens/main/Home')
+  // })
+  // .catch((error) => {
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  // });
+
   }
 
 
@@ -43,7 +47,7 @@ export default function LoginScreen() {
       <KeyboardAwareScrollView>
       <ScrollView contentContainerStyle={styles.scrollContent}>
       <View style={styles.content}>
-        <Image source={require('@/assets/images/job.jpeg')} style={styles.Image}/>
+        <Image source={require('@/assets/images/SMIT-logo.png')} style={styles.Image}/>
         <Text style={styles.title}>Login</Text>
         <Text style={styles.subtitle}>
           Welcome back! Please log in to access your account.
@@ -85,12 +89,15 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>router.push('/screens/auth/ForgotPsw')}>
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <TouchableOpacity style={styles.loginButton} onPress={()=>signIn(email, password)}>
+            {loading ? 
+            <ActivityIndicator size={200} color={'#fff'}/>:
             <Text style={styles.loginButtonText}>Login</Text>
+            }
           </TouchableOpacity>
 
           <View style={styles.orContainer}>
@@ -112,6 +119,9 @@ export default function LoginScreen() {
           <TouchableOpacity style={styles.signupContainer} onPress={()=>router.push('/screens/auth/Signup')}>
             <Text style={styles.signupText}>Don't have an account?</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.signupContainer} onPress={()=>router.push('/screens/auth/CompanyOwner')}>
+            <Text style={styles.signupText}>Are you a Company Owner?</Text>
+          </TouchableOpacity>
         </View>
       </View>
       </ScrollView>
@@ -123,7 +133,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ECFDF5',
   },
   content: {
     padding: 24,
@@ -179,7 +189,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     // backgroundColor: '#4CAF50',
-    backgroundColor: '#1F51FF',
+    backgroundColor: '#10B981',
     height: 48,
     borderRadius: 24,
     justifyContent: 'center',

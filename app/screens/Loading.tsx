@@ -5,7 +5,8 @@ import { useEffect } from 'react';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import { router } from 'expo-router';
-import { getItem } from '../utils/asyncStorage';
+import { getItem } from '../utils/AsyncStorage';
+import { Platform } from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 
@@ -35,7 +36,7 @@ export default function Loading() {
   return (
     <View style={styles.container}>
       {/* <LottieView source={require('../../assets/LottieFiles/Loading.json')} style={styles.lottie} autoPlay loop /> */}
-    <ActivityIndicator size={300}/>
+    <ActivityIndicator size={Platform.OS ? 250 : 100} color={'#10B981'}/>
     </View>
 
   );
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#ECFDF5',
   },
   lottie: {
     height: width,

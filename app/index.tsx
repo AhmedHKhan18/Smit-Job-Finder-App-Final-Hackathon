@@ -4,8 +4,15 @@ import Loading from './screens/Loading';
 import Onboarding from './screens/onboarding';
 import Login from './screens/auth/Login';
 import Signup from './screens/auth/Signup';
-import { getItem } from './utils/asyncStorage';
+import CompanyOwner from './screens/auth/CompanyOwner';
+import { getItem } from './utils/AsyncStorage';
 import Home from '../app/screens/main/Home';
+import Profile from '../app/screens/main/Profile'
+import Saved from '../app/screens/main/Saved'
+import NotificationScreen from './screens/NotificationScreen';
+import ProfileComplete from './screens/ProfileComplete';
+import { AppProvider } from '../context/AppContext'; // Adjust the path
+
 
 
 export type RootStackParamList = {
@@ -14,6 +21,11 @@ export type RootStackParamList = {
   Loading: undefined;
   Onboarding: undefined;
   Home: undefined;
+  Saved: undefined;
+  Profile: undefined;
+  NotificationScreen: undefined;
+  ProfileComplete: undefined;
+  CompanyOwner: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -45,22 +57,36 @@ useEffect(() => {
 
 if(showOnboarding){
   return (
+    <AppProvider>
     <Stack.Navigator initialRouteName='Onboarding'>
       <Stack.Screen name="Loading" component={Loading} options={opt}/>
       <Stack.Screen name="Onboarding" component={Onboarding} options={opt}/>
       <Stack.Screen name="Login" component={Login} options={opt}/>
       <Stack.Screen name="Signup" component={Signup} options={opt}/>
       <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Profile" component={Profile} options={opt} /> 
+      <Stack.Screen name="Saved" component={Saved} options={opt} /> 
+      <Stack.Screen name="NotificationScreen" component={NotificationScreen} options={opt} /> 
+      <Stack.Screen name="ProfileComplete" component={ProfileComplete} options={opt} /> 
+      <Stack.Screen name="CompanyOwner" component={CompanyOwner} options={opt}/>
     </Stack.Navigator>
+    </AppProvider>
   );
 }else{
   return (
+    <AppProvider>
     <Stack.Navigator initialRouteName='Loading'>
       <Stack.Screen name="Loading" component={Loading} options={opt}/>
       <Stack.Screen name="Login" component={Login} options={opt}/>
       <Stack.Screen name="Signup" component={Signup} options={opt}/>
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home" component={Home} /> 
+      <Stack.Screen name="Profile" component={Profile} options={opt}/> 
+      <Stack.Screen name="Saved" component={Saved} options={opt} /> 
+      <Stack.Screen name="NotificationScreen" component={NotificationScreen} options={opt} /> 
+      <Stack.Screen name="ProfileComplete" component={ProfileComplete} options={opt} /> 
+      <Stack.Screen name="CompanyOwner" component={CompanyOwner} options={opt}/>
     </Stack.Navigator>
+    </AppProvider>
   );
 }
 

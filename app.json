@@ -27,17 +27,17 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/job.jpeg",
+          "image": "./assets/images/SMIT-logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#ECFDF5"
         }
       ]
     ],
     "splash": {
-      "image": "./assets/images/job.jpeg", 
+      "image": "./assets/images/SMIT-logo.png", 
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ECFDF5"
     },
     "experiments": {
       "typedRoutes": true
